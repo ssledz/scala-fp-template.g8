@@ -1,5 +1,3 @@
-import sbt._
-
 object Dependencies {
 
   val akkVersion = "2.3.12"
