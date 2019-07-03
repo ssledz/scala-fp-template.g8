@@ -3,12 +3,13 @@ import sbt._
 object Dependencies {
 
   val akkVersion = "2.3.12"
-  val doobieVersion = "$doobieVersion$"
-  val http4sVersion = "$http4sVersion$"
+  val doobieVersion = "0.6.0"
+  val http4sVersion = "0.20.0-M4"
   val circeVersion = "0.9.3"
   val jsoniterVersion = "0.49.1"
   val monocleVersion = "1.5.0"
   val catsVersion = "1.0.1"
+  val fs2Version = "1.0.2"
 
   val akka = Seq(
     "akka-actor"
@@ -17,7 +18,7 @@ object Dependencies {
   val fs2 = Seq(
     "fs2-core",
     "fs2-io"
-  ).map("co.fs2" %% _ % "$fs2Version$")
+  ).map("co.fs2" %% _ % fs2Version)
 
   val doobie = Seq(
     "doobie-core",
