@@ -2,18 +2,14 @@ import sbt._
 
 object Dependencies {
 
-  val akkVersion = "2.3.12"
-  val doobieVersion = "0.6.0"
-  val http4sVersion = "0.20.0-M4"
-  val circeVersion = "0.9.3"
+  val doobieVersion = "0.7.0"
+  val http4sVersion = "0.20.3"
+  val circeVersion = "0.11.1"
   val jsoniterVersion = "0.49.1"
-  val monocleVersion = "1.5.0"
-  val catsVersion = "1.0.1"
-  val fs2Version = "1.0.2"
-
-  val akka = Seq(
-    "akka-actor"
-  ).map("com.typesafe.akka" %% _ % akkVersion)
+  val catsVersion = "1.6.1"
+  val catsEffectVersion = "1.3.1"
+  val catsFreeVersion = catsVersion
+  val fs2Version = "1.0.5"
 
   val fs2 = Seq(
     "fs2-core",
@@ -27,7 +23,7 @@ object Dependencies {
 
   val doobiePostgres = "org.tpolecat" %% "doobie-postgres" % doobieVersion // Postgres driver + type mappings.
 
-  val doobieScalaTest = "org.tpolecat" %% "doobie-scalatest" % doobieVersion // Postgres driver + type mappings.
+  val doobieScalaTest = "org.tpolecat" %% "doobie-scalatest" % doobieVersion % Test // Postgres driver + type mappings.
 
   val doobieH2 = "org.tpolecat" %% "doobie-h2" % doobieVersion // H2 driver + type mappings.
 
@@ -44,7 +40,7 @@ object Dependencies {
     "circe-generic-extras"
   ).map("io.circe" %% _ % circeVersion)
 
-  val enumeratumCirce = "com.beachape" %% "enumeratum-circe" % "1.5.17"
+  val enumeratumCirce = "com.beachape" %% "enumeratum-circe" % "1.5.21"
 
   val jsoniter = Seq(
     ("jsoniter-scala-core", Compile),
@@ -53,15 +49,15 @@ object Dependencies {
     "com.github.plokhotnyuk.jsoniter-scala" %% name % jsoniterVersion % scope
   }
 
-  val monocle = Seq(
-    "monocle-core",
-    "monocle-state",
-    "monocle-macro"
-  ).map("com.github.julien-truffaut" %% _ % "1.5.0")
-
   val enumeratum = "com.beachape" %% "enumeratum" % "1.5.13"
 
-  val cats = "org.typelevel" %% "cats-core" % catsVersion
+  val catsCore = "org.typelevel" %% "cats-core" % catsVersion
+
+  val catsEffect = "org.typelevel" %% "cats-effect" % catsEffectVersion
+
+  val catsFree = "org.typelevel" %% "cats-free" % catsFreeVersion
+
+  val cats = Seq(catsCore, catsEffect, catsFree)
 
   val flyway = "org.flywaydb" % "flyway-core" % "5.2.0"
 

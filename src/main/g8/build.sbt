@@ -7,8 +7,10 @@ lazy val root = (project in file(".")).
     dependencies,
     tests
   )
+  .enablePlugins(ScalafmtPlugin)
 
-addCommandAlias("fmt", ";scalafmt ;test:scalafmt ;it:scalafmt")
+addCommandAlias("fmt", ";scalafmt ;test:scalafmt ;scalafmtSbt")
+addCommandAlias("showDep", ";dependencyBrowseGraph")
 
 lazy val commonSettings = Seq(
   name         := "$name$",
@@ -77,7 +79,7 @@ def scalacOptionsForVersion(version: String): Seq[String] = {
       "-Ywarn-inaccessible",               // Warn about inaccessible types in method signatures.
       "-Ywarn-infer-any",                  // Warn when a type argument is inferred to be `Any`.
       "-Ywarn-nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-      "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
+      "-Ywarn-nullary-unit"                // Warn when nullary methods return Unit.
     )
     case _ => Seq()
   }
@@ -85,25 +87,12 @@ def scalacOptionsForVersion(version: String): Seq[String] = {
   // format: on
 }
 
-lazy val typeSystemEnhancements =
-  addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.9")
+lazy val typeSystemEnhancements = addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.9")
 
 import Dependencies._
 
 lazy val dependencies = {
-  val deps = libraryDependencies ++= Seq(
-    $if(http4senabled.truthy) $
-      http4s,
-    $endif$
-    $if (doobieenabled.truthy) $
-      doobie,
-      doobiePostgres,
-    $endif$
-    $if (circeenabled.truthy) $
-      circe,
-    $endif$
-      cats
-  )
+  val deps = libraryDependencies ++= cats
 
   def extraResolvers =
     resolvers ++= Seq(
@@ -118,10 +107,6 @@ lazy val dependencies = {
 lazy val tests = {
 
   val deps = libraryDependencies ++= Seq(
-    $if(doobieenabled.truthy)$
-      doobieH2,
-      doobieScalaTest,
-    $endif$
     scalaTest,
     scalaCheck
   )
