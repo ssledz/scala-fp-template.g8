@@ -4,7 +4,6 @@ lazy val root = (project in file(".")).
     consoleSettings,
     scalaOptions,
     typeSystemEnhancements,
-    betterMonadicFor,
     dependencies,
     tests
   )
@@ -88,9 +87,6 @@ def scalacOptionsForVersion(version: String): Seq[String] = {
 
 lazy val typeSystemEnhancements =
   addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.9")
-
-lazy val betterMonadicFor =
-  addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.2.4")
 
 import Dependencies._
 
