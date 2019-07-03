@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).
   settings(
     commonSettings,
     consoleSettings,
-    scalacOptionsForVersion(scalaVersion.value),
+    scalaOptions,
     typeSystemEnhancements,
     betterMonadicFor,
     dependencies,
@@ -25,6 +25,8 @@ val consoleSettings = Seq(
   initialCommands := s"import $defaultImportPath$",
   scalacOptions in (Compile, console) ~= (_.filterNot(badConsoleFlags.contains(_)))
 )
+
+lazy val scalaOptions = scalacOptions ++= scalacOptionsForVersion(scalaVersion.value)
 
 def scalacOptionsForVersion(version: String): Seq[String] = {
   // format: off
