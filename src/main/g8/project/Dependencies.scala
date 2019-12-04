@@ -2,19 +2,15 @@ import sbt._
 
 object Dependencies {
 
-  val doobieVersion = "0.7.0"
-  val http4sVersion = "0.20.3"
-  val circeVersion = "0.11.1"
-  val jsoniterVersion = "0.49.1"
-  val catsVersion = "1.6.1"
-  val catsEffectVersion = "1.3.1"
+  val doobieVersion = "0.8.6"
+  val catsVersion = "2.0.0"
+  val catsEffectVersion = catsVersion
   val catsFreeVersion = catsVersion
-  val fs2Version = "1.0.5"
 
   val fs2 = Seq(
     "fs2-core",
     "fs2-io"
-  ).map("co.fs2" %% _ % fs2Version)
+  ).map("co.fs2" %% _ % "2.1.0")
 
   val doobie = Seq(
     "doobie-core",
@@ -31,25 +27,26 @@ object Dependencies {
     "http4s-dsl",
     "http4s-blaze-server",
     "http4s-blaze-client"
-  ).map("org.http4s" %% _ % http4sVersion)
+  ).map("org.http4s" %% _ % "0.21.0-M6")
 
   val circe = Seq(
     "circe-core",
     "circe-generic",
     "circe-parser",
     "circe-generic-extras"
-  ).map("io.circe" %% _ % circeVersion)
-
-  val enumeratumCirce = "com.beachape" %% "enumeratum-circe" % "1.5.21"
+  ).map("io.circe" %% _ % "0.12.1")
 
   val jsoniter = Seq(
     ("jsoniter-scala-core", Compile),
     ("jsoniter-scala-macros", Provided) // required only in compile-time
-  ).map { case (name, scope) =>
-    "com.github.plokhotnyuk.jsoniter-scala" %% name % jsoniterVersion % scope
+  ).map {
+    case (name, scope) =>
+      "com.github.plokhotnyuk.jsoniter-scala" %% name % "2.0.2" % scope
   }
 
   val enumeratum = "com.beachape" %% "enumeratum" % "1.5.13"
+
+  val enumeratumCirce = "com.beachape" %% "enumeratum-circe" % "1.5.22"
 
   val catsCore = "org.typelevel" %% "cats-core" % catsVersion
 
@@ -59,19 +56,15 @@ object Dependencies {
 
   val cats = Seq(catsCore, catsEffect, catsFree)
 
-  val flyway = "org.flywaydb" % "flyway-core" % "5.2.0"
-
   val logback = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
-  val pureConfig = "com.github.pureconfig" %% "pureconfig" % "0.10.0"
+  val pureConfig = "com.github.pureconfig" %% "pureconfig" % "0.12.1"
 
-  val scalaMeter = "com.storm-enroute" %% "scalameter" % "0.8.2"
+  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.14.2" % Test
 
-  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.14.0" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.0.8" % Test
 
-  val scalaTest = "org.scalatest" %% "scalatest" % "3.0.7" % Test
+  val mockitoScala = "org.mockito" %% "mockito-scala" % "1.7.1" % Test
 
-  val mockitoScala = "org.mockito" %% "mockito-scala" % "1.3.1" % Test
-
-  val tests = Seq(scalaTest, scalaCheck)
+  val tests = Seq(scalaTest, scalaCheck, mockitoScala)
 }

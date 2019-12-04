@@ -1,13 +1,13 @@
-lazy val root = (project in file(".")).
-  settings(
-    commonSettings,
-    consoleSettings,
-    scalaOptions,
-    typeSystemEnhancements,
-    dependencies,
-    tests
-  )
-  .enablePlugins(ScalafmtPlugin)
+lazy val root = (project in file(".")).settings(
+  commonSettings,
+  consoleSettings,
+  scalaOptions,
+  typeSystemEnhancements,
+  dependencies,
+  tests,
+  // https://github.com/dwijnand/sbt-dynver#docker-compatible-version-strings
+  dynverSeparator in ThisBuild := "-",
+)
 
 addCommandAlias("fmt", ";scalafmt ;test:scalafmt ;scalafmtSbt")
 addCommandAlias("showDep", ";dependencyBrowseGraph")
@@ -15,8 +15,7 @@ addCommandAlias("showDep", ";dependencyBrowseGraph")
 lazy val commonSettings = Seq(
   name         := "$name$",
   organization := "$organization$",
-  scalaVersion := "$scalaVersion$",
-  version      := "0.0.1-SNAPSHOT"
+  scalaVersion := "$scalaVersion$"
 )
 
 // Filter out compiler flags to make the repl experience functional...
@@ -42,7 +41,6 @@ def scalacOptionsForVersion(version: String): Seq[String] = {
     "-language:implicitConversions",     // Allow definition of implicit functions called views
     "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
     "-Xcheckinit",                       // Wrap field accessors to throw an exception on uninitialized access.
-    "-Xfuture",                          // Turn on future language features.
     "-Xlint:adapted-args",               // Warn if an argument list is modified to match the receiver.
     "-Xlint:constant",                   // Evaluation of a constant arithmetic expression results in an error.
     "-Xlint:delayedinit-select",         // Selecting member of DelayedInit.
@@ -87,7 +85,7 @@ def scalacOptionsForVersion(version: String): Seq[String] = {
   // format: on
 }
 
-lazy val typeSystemEnhancements = addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.9")
+lazy val typeSystemEnhancements = addCompilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.0").cross(CrossVersion.full))
 
 import Dependencies._
 
@@ -115,3 +113,5 @@ lazy val tests = {
 
   Seq(deps, frameworks)
 }
+
+enablePlugins(ScalafmtPlugin)
