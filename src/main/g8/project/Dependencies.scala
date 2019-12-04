@@ -58,6 +58,8 @@ object Dependencies {
 
   val logback = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
+  val logging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
+
   val pureConfig = "com.github.pureconfig" %% "pureconfig" % "0.12.1"
 
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.14.2" % Test
